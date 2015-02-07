@@ -1,11 +1,11 @@
 package org.usfirst.frc.team5612.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-public class Robot extends SampleRobot
+public class Robot extends IterativeRobot
 {
 	RobotDrive myRobot; //Defines the class for basic drive operations
 	Joystick stick; //Defines the class for joy stick control
