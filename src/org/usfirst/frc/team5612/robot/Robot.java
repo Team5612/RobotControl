@@ -59,16 +59,6 @@ public class Robot extends IterativeRobot
 	{
 		liftDrive = new Relay(3);
 		liftStick = new Joystick(3);
-	}
-	
-	/**
-	 * This function is called during user control
-	 */
-	public void teleopPeriodic()
-	{
-		robotDrive.arcadeDrive(-driveStick.getY(), driveStick.getX());
-		Timer.delay(0.01);
-			
 		liftDrive.notifyAll();
 		
 		if(liftDrive.get() == Value.kOff)
@@ -79,8 +69,15 @@ public class Robot extends IterativeRobot
 		{
 			liftDrive.set(Value.kOff);
 		}
-		
-		
+	}
+	
+	/**
+	 * This function is called during user control
+	 */
+	public void teleopPeriodic()
+	{
+		robotDrive.arcadeDrive(-driveStick.getY(), driveStick.getX());
+		Timer.delay(0.01);
 				 
 	}
 	
