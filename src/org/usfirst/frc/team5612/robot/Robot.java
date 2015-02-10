@@ -2,15 +2,20 @@ package org.usfirst.frc.team5612.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot
 {
-	RobotDrive myDrive; //Defines the class for basic drive operations
+	RobotDrive robotDrive; //Defines the class for basic drive operations
 	Joystick driveStick; //Defines the class for joy stick control
-	Joystick servoDrive; //Defines the class for servo control
+	
+	Relay liftDrive; //Defines the class for the serveo
+	Joystick liftStick; //Defines the class for lift joy stick control
+	
 	int autoLoopCounter;
 	
 	
@@ -19,9 +24,8 @@ public class Robot extends IterativeRobot
 	 */
 	public void robotInit()
 	{
-		myDrive = new RobotDrive(0,1);
+		robotDrive = new RobotDrive(0,1);
 		driveStick = new Joystick(0);
-		servoDrive = new Joystick(3);
 	}
 	
 	/**
@@ -39,12 +43,12 @@ public class Robot extends IterativeRobot
 	{
 		if(autoLoopCounter < 100) //Check for 100 cycles of the loop
 		{
-			myDrive.drive(-0.5, 0.0); //Makes robot drive at half speed
+			robotDrive.drive(-0.5, 0.0); //Makes robot drive at half speed
 			autoLoopCounter++;
 		}
 		else
 		{
-			myDrive.drive(0.0, 0.0); //Stops the robot
+			robotDrive.drive(0.0, 0.0); //Stops the robot
 		}
 	}
 	
@@ -53,7 +57,8 @@ public class Robot extends IterativeRobot
 	 */
 	public void teleopInit()
 	{
-		
+		liftDrive = new Relay(3);
+		liftStick = new Joystick(3);
 	}
 	
 	/**
@@ -61,9 +66,24 @@ public class Robot extends IterativeRobot
 	 */
 	public void teleopPeriodic()
 	{
-		myDrive.arcadeDrive(-driveStick.getY(), driveStick.getX());
+		robotDrive.arcadeDrive(-driveStick.getY(), driveStick.getX());
 		Timer.delay(0.01);
+			
+		liftDrive.notifyAll();
+		
+		if(liftDrive.get() == Value.kOff)
+		{
+			liftDrive.set(Value.kOn);
+		}
+		else
+		{
+			liftDrive.set(Value.kOff);
+		}
+		
+		
+				 
 	}
+	
 	
 	/**
 	 * This function is called when the robot goes into test mode
