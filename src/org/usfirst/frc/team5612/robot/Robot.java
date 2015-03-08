@@ -3,7 +3,6 @@ package org.usfirst.frc.team5612.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
@@ -11,12 +10,15 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class Robot extends IterativeRobot
 {  
-	RobotDrive robotDrive; //Defines the class for basic drive operations
-	Joystick driveStick; //Defines the class for joy stick control
-	
-	Talon liftServo;//Defines the class for the serveo
-	Joystick liftStick;//Defines the class for lift joy stick control
-	
+	// Defines the class for basic drive operations
+	RobotDrive robotDrive;
+	// Defines the class for joy stick control
+	Joystick driveStick;
+	// Defines the class for the servo
+	Talon liftServo;
+	// Defines the class for lift joy stick control
+	Joystick liftStick;
+	// Defines the class for camera server
 	CameraServer server;
 	
 	int autoLoopCounter;
@@ -51,14 +53,17 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-		if(autoLoopCounter < 100) //Check for 100 cycles of the loop
+		// Check for 100 cycles of the loop
+		if(autoLoopCounter < 100)
 		{
-			robotDrive.drive(-0.5, 0.0); //Makes robot drive at half speed
+			// Makes robot drive at quarter speed
+			robotDrive.drive(0.6, 0.0);
 			autoLoopCounter++;
 		}
 		else
 		{
-			robotDrive.drive(0.0, 0.0); //Stops the robot
+			// Stops the robot
+			robotDrive.drive(0.0, 0.0);
 		}
 	}
 	
@@ -75,7 +80,9 @@ public class Robot extends IterativeRobot
 	 */
 	public void teleopPeriodic()
 	{	
-		robotDrive.arcadeDrive(-driveStick.getY(), driveStick.getX());
+		// Activates robotDrive and inverts driveStick
+		robotDrive.arcadeDrive(-driveStick.getY(), -driveStick.getX());
+		// Activates liftServo and inverts liftStick
 		liftServo.set(liftStick.getY());
 		Timer.delay(0.01);
 	}
