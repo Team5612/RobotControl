@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -15,14 +15,13 @@ public class Robot extends IterativeRobot
 	// Defines the class for joy stick control
 	Joystick driveStick;
 	// Defines the class for the servo
-	Talon liftServo;
+	TalonSRX liftServo;
 	// Defines the class for lift joy stick control
 	Joystick liftStick;
 	// Defines the class for camera server
 	CameraServer server;
 	
 	int autoLoopCounter;
-	
 	
 	/**
 	 * This is the initialization for all robot code
@@ -32,7 +31,7 @@ public class Robot extends IterativeRobot
 		robotDrive = new RobotDrive(0,1);
 		driveStick = new Joystick(0);
 		
-		liftServo = new Talon(3);
+		liftServo = new TalonSRX(3);
 		liftStick = new Joystick(3);
 		
 		server = CameraServer.getInstance();
@@ -71,9 +70,7 @@ public class Robot extends IterativeRobot
 	 * This function is used when the robot goes into user operated mode
 	 */
 	public void teleopInit()
-	{
-		
-	}
+	{}
 	
 	/**
 	 * This function is called during user control
@@ -85,8 +82,8 @@ public class Robot extends IterativeRobot
 		// Activates liftServo and inverts liftStick
 		liftServo.set(liftStick.getY());
 		Timer.delay(0.01);
+		robotDrive.setMaxOutput(-driveStick.getThrottle());
 	}
-	
 	
 	/**
 	 * This function is called when the robot goes into test mode
@@ -95,5 +92,4 @@ public class Robot extends IterativeRobot
 	{
 		LiveWindow.run();
 	}
-	
 }
